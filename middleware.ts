@@ -19,7 +19,7 @@ export default async function middleware(req: NextRequest) {
   const currentHost =
     process.env.NODE_ENV === "production" && process.env.VERCEL === "1"
       ? hostname.replace(`.bauzito.shop`, "")
-      : hostname.replace(`.localhost:3000`, "");
+      : hostname.replace(`.bauzito.shop`, "");
 
   const data = await getHostnameDataOrDefault(currentHost);
 
