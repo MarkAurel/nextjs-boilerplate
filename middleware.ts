@@ -46,7 +46,7 @@ export default async function middleware(req: NextRequest) {
   } else {
     // console.log('URL 2', req.nextUrl.href)
     // rewrite to the current subdomain under the pages/sites folder
-    url.pathname = `/_sites/${data.subdomain}${url.pathname}`;
+    url.pathname = `/_sites/${data[0].subdomain}${url.pathname}`;
   }
 
   return NextResponse.rewrite(url);
