@@ -18,26 +18,7 @@ export default async function middleware(req: NextRequest) {
   // process.env.VERCEL === "1" indicates that the app is deployed on Vercel
   const currentHost = ".bauzito.shop";
 
-  const data = [
-    {
-      name: "This is Site 1",
-      description: "Subdomain + custom domain",
-      subdomain: "test1",
-      customDomain: "bauzito.shop",
-      // Default subdomain for Preview deployments and for local development
-      defaultForPreview: true,
-    },
-    {
-      name: "This is Site 2",
-      description: "Subdomain only",
-      subdomain: "test2",
-    },
-    {
-      name: "This is Site 3",
-      description: "Subdomain only",
-      subdomain: "test3",
-    },
-  ];
+  const data = await getHostnameDataOrDefault(currentHost);
 
   // Prevent security issues – users should not be able to canonically access
   // the pages/sites folder and its respective contents.
@@ -46,7 +27,7 @@ export default async function middleware(req: NextRequest) {
   } else {
     // console.log('URL 2', req.nextUrl.href)
     // rewrite to the current subdomain under the pages/sites folder
-    url.pathname = `/_sites/${data[0].subdomain}${url.pathname}`;
+    url.pathname = `/_sites/${data.subdomain}${url.pathname}`;
   }
 
   return NextResponse.rewrite(url);
