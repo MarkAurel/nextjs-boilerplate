@@ -19,18 +19,23 @@ export default async function middleware(req: NextRequest) {
   const currentHost =
     process.env.NODE_ENV === "production" && process.env.VERCEL === "1"
       ? hostname?.replace(`.bauzito.shop`, "") || ""
-      : hostname?.replace(`.bauzito.shop`, "") || "";
+      : hostname?.replace(`.localhost:3000`, "") || "";
 
-  const data = await getHostnameDataOrDefault(currentHost);
+  try {
+    const data = await getHostnameDataOrDefault(currentHost);
+    console.log(data);
 
-  // Prevent security issues – users should not be able to canonically access
-  // the pages/sites folder and its respective contents.
-  if (url.pathname.startsWith(`/_sites`)) {
-    url.pathname = `/404`;
-  } else {
-    // console.log('URL 2', req.nextUrl.href)
-    // rewrite to the current subdomain under the pages/sites folder
-    url.pathname = `/_sites/${data.subdomain}${url.pathname}`;
+    // Prevent security issues – users should not be able to canonically access
+    // the pages/sites folder and its respective contents.
+    if (url.pathname.startsWith(`/_sites`)) {
+      url.pathname = `/404`;
+    } else {
+      // console.log('URL 2', req.nextUrl.href)
+      // rewrite to the current subdomain under the pages/sites folder
+      url.pathname = `/_sites/${data.subdomain}${url.pathname}`;
+    }
+  } catch (error) {
+    console.error("Error while fetching data:", error);
   }
 
   return NextResponse.rewrite(url);
