@@ -4,7 +4,7 @@ const hostnamesDB = [
     name: "This is Site 1",
     description: "Subdomain + custom domain",
     subdomain: "test1",
-    customDomain: "custom-domain-1.com",
+    customDomain: "bauzito.shop",
     // Default subdomain for Preview deployments and for local development
     defaultForPreview: true,
   },
