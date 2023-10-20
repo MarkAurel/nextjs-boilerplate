@@ -16,7 +16,7 @@ export default async function middleware(req: NextRequest) {
   // (in the case of "subdomain-3.localhost:3000", "localhost:3000" is the root URL)
   // process.env.NODE_ENV === "production" indicates that the app is deployed to a production environment
   // process.env.VERCEL === "1" indicates that the app is deployed on Vercel
-  const currentHost = ".bauzito.app";
+  const currentHost = ".bauzito.shop";
 
   const data = await getHostnameDataOrDefault(currentHost);
 
