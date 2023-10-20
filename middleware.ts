@@ -18,8 +18,8 @@ export default async function middleware(req: NextRequest) {
   // process.env.VERCEL === "1" indicates that the app is deployed on Vercel
   const currentHost =
     process.env.NODE_ENV === "production" && process.env.VERCEL === "1"
-      ? hostname.replace(`.bauzito.shop`, "")
-      : hostname.replace(`.bauzito.shop`, "");
+      ? hostname?.replace(`.bauzito.shop`, "") || ""
+      : hostname?.replace(`.bauzito.shop`, "") || "";
 
   const data = await getHostnameDataOrDefault(currentHost);
 
