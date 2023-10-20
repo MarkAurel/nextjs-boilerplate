@@ -18,7 +18,26 @@ export default async function middleware(req: NextRequest) {
   // process.env.VERCEL === "1" indicates that the app is deployed on Vercel
   const currentHost = ".bauzito.shop";
 
-  const data = await getHostnameDataOrDefault(currentHost);
+  const data = [
+    {
+      name: "This is Site 1",
+      description: "Subdomain + custom domain",
+      subdomain: "test1",
+      customDomain: "bauzito.shop",
+      // Default subdomain for Preview deployments and for local development
+      defaultForPreview: true,
+    },
+    {
+      name: "This is Site 2",
+      description: "Subdomain only",
+      subdomain: "test2",
+    },
+    {
+      name: "This is Site 3",
+      description: "Subdomain only",
+      subdomain: "test3",
+    },
+  ];
 
   // Prevent security issues – users should not be able to canonically access
   // the pages/sites folder and its respective contents.
