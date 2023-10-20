@@ -16,10 +16,14 @@ export default async function middleware(req: NextRequest) {
   // (in the case of "subdomain-3.localhost:3000", "localhost:3000" is the root URL)
   // process.env.NODE_ENV === "production" indicates that the app is deployed to a production environment
   // process.env.VERCEL === "1" indicates that the app is deployed on Vercel
-  const currentHost =
-    process.env.NODE_ENV === "production" && process.env.VERCEL === "1"
-      ? hostname?.replace(`.bauzito.shop`, "") || ""
-      : hostname?.replace(`.localhost:3000`, "") || "";
+// Get hostname (e.g. vercel.com, test.vercel.app, etc.)
+const hostname = req.headers.get("host");
+
+// If in a production environment on Vercel, adjust the host value
+if (process.env.VERCEL_ENV === "production") {
+  const customDomain = hostname.includes(".bauzito.shop");
+  hostname = customDomain ? hostname.replace(`.bauzito.shop`, "") : hostname.replace(`.vercel.app`, "");
+}
 
   try {
     const data = await getHostnameDataOrDefault(currentHost);
